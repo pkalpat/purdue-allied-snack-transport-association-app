@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PurduePasta.View.LocationsPage"
+             Title="Delivery spots">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="24,24,24,14" Spacing="8">
+            <Label Text="DELIVERY ZONE" Style="{StaticResource EyebrowLabel}" />
+            <Label Text="Meet us around Purdue." Style="{StaticResource PageTitle}" FontSize="29" />
+            <Label Text="Pick a spot on campus or around Chauncey. Your PASTA pilot will do the rest." TextColor="{StaticResource MutedInk}" FontSize="14" LineHeight="1.25" />
+            <Border Margin="0,10,0,0" BackgroundColor="White" StrokeThickness="0" Padding="14,0" StrokeShape="RoundRectangle 14">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Text="⌕" FontSize="25" TextColor="{StaticResource MutedInk}" VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1" Placeholder="Search halls, campus, downtown..." Text="{Binding SearchText}" ClearButtonVisibility="WhileEditing" TextColor="{StaticResource Ink}" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,4,24,24" Spacing="12">
+                <Label Text="DELIVERY SPOTS" Style="{StaticResource EyebrowLabel}" TextColor="{StaticResource MutedInk}" />
+                <CollectionView ItemsSource="{Binding VisibleLocations}" SelectionMode="None">
+                    <CollectionView.ItemsLayout><LinearItemsLayout Orientation="Vertical" ItemSpacing="12" /></CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardBorder}" Padding="15">
+                                <Grid ColumnDefinitions="52,*,Auto" ColumnSpacing="13">
+                                    <Border BackgroundColor="#F0ECE3" HeightRequest="52" WidthRequest="52" StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                                        <Label Text="{Binding Emoji}" FontSize="25" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource Ink}" />
+                                            <Label Text="CAMPUS PICK" IsVisible="{Binding IsFeatured}" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource Success}" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding Address}" FontSize="12" TextColor="{StaticResource MutedInk}" />
+                                        <Label Text="{Binding Eta, StringFormat='Delivery in {0}'}" FontSize="12" TextColor="{StaticResource Success}" FontAttributes="Bold" Margin="0,3,0,0" />
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="2" Text="Select" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectLocationCommand}" CommandParameter="{Binding .}" BackgroundColor="#F0ECE3" TextColor="{StaticResource Ink}" CornerRadius="12" FontAttributes="Bold" Padding="12,0" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" Margin="16,4,16,16" Padding="16,12" BackgroundColor="{StaticResource PurdueBlack}" StrokeThickness="0" StrokeShape="RoundRectangle 18">
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="SELECTED DESTINATION" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource PurdueGold}" />
+                    <Label Text="{Binding SelectionSummary}" TextColor="White" FontAttributes="Bold" FontSize="15" />
+                </VerticalStackLayout>
+                <Button Grid.Column="1" Text="Done" Clicked="OnDoneClicked" BackgroundColor="{StaticResource PurdueGold}" TextColor="{StaticResource PurdueBlack}" CornerRadius="12" FontAttributes="Bold" Padding="18,0" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PurduePasta.View.OrderingPage"
+             Title="Order">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="24,24,24,10" Spacing="8">
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="P.A.S.T.A." Style="{StaticResource EyebrowLabel}" />
+                    <Label Text="Fuel your next adventure." Style="{StaticResource PageTitle}" FontSize="26" />
+                </VerticalStackLayout>
+                <Border Grid.Column="1" BackgroundColor="{StaticResource PurdueGold}" Padding="12,8" StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                    <Label Text="BOILER UP" FontAttributes="Bold" TextColor="{StaticResource PurdueBlack}" FontSize="11" />
+                </Border>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="DELIVERING TO" Style="{StaticResource EyebrowLabel}" FontSize="10" TextColor="{StaticResource MutedInk}" />
+                    <Label Text="{Binding DeliverySpot}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource Ink}" />
+                </VerticalStackLayout>
+                <Button Grid.Column="1" Text="Change" Clicked="OnLocationsClicked" BackgroundColor="Transparent" TextColor="{StaticResource Success}" FontAttributes="Bold" Padding="8,0" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="18">
+                <Label Text="What sounds good?" FontSize="21" FontAttributes="Bold" TextColor="{StaticResource Ink}" />
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Categories}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Button Text="{Binding .}" CommandParameter="{Binding .}" Clicked="OnCategoryClicked" Padding="18,0" HeightRequest="40" CornerRadius="20" BackgroundColor="#E9E5DC" TextColor="{StaticResource Ink}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </ScrollView>
+                <CollectionView ItemsSource="{Binding VisibleItems}" SelectionMode="None">
+                    <CollectionView.ItemsLayout><LinearItemsLayout Orientation="Vertical" ItemSpacing="12" /></CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardBorder}">
+                                <Grid ColumnDefinitions="56,*,Auto" ColumnSpacing="14">
+                                    <Border BackgroundColor="#F0ECE3" StrokeThickness="0" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 16">
+                                        <Label Text="{Binding Emoji}" FontSize="28" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                        <HorizontalStackLayout Spacing="7">
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource Ink}" />
+                                            <Label Text="POPULAR" IsVisible="{Binding IsPopular}" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource Success}" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding Description}" FontSize="12" TextColor="{StaticResource MutedInk}" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Price, StringFormat='${0:0.00}'}" FontAttributes="Bold" TextColor="{StaticResource PurdueBlack}" Margin="0,4,0,0" />
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="2" Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToCartCommand}" CommandParameter="{Binding .}" WidthRequest="42" HeightRequest="42" CornerRadius="21" BackgroundColor="{StaticResource PurdueBlack}" TextColor="White" FontSize="22" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" Margin="16,4,16,16" Padding="16,12" BackgroundColor="{StaticResource PurdueBlack}" StrokeThickness="0" StrokeShape="RoundRectangle 18">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                <Label Text="YOUR CART" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource PurdueGold}" />
+                <Label Grid.Row="1" Text="{Binding CartSummary}" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                <Button Grid.Column="1" Grid.RowSpan="2" Text="View cart  ›" Clicked="OnCartClicked" BackgroundColor="{StaticResource PurdueGold}" TextColor="{StaticResource PurdueBlack}" CornerRadius="12" FontAttributes="Bold" Padding="16,0" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
