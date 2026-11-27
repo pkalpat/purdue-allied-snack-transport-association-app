@@ -1,0 +1,61 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# Visual Studio and .NET tooling
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.csproj.user
+*.nupkg
+*.snupkg
+artifacts/
+
+# NuGet and generated restore files
+packages/
+project.assets.json
+project.nuget.cache
+*.nuget.g.props
+*.nuget.g.targets
+
+# .NET MAUI generated files
+MauiProgram.g.cs
+Resources/Raw/*.generated.cs
+
+# Android build and signing artifacts
+*.apk
+*.aab
+*.apks
+*.keystore
+*.jks
+
+# iOS/macOS build artifacts and signing files
+*.app
+*.ipa
+*.dSYM/
+*.mobileprovision
+*.p12
+
+# Runtime logs and local data
+*.log
+*.tmp
+*.temp
+*.db
+*.sqlite
+*.sqlite3
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.Local.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
